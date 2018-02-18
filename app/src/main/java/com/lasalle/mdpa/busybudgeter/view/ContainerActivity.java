@@ -3,6 +3,7 @@ package com.lasalle.mdpa.busybudgeter.view;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -16,7 +17,6 @@ import butterknife.ButterKnife;
 public class ContainerActivity extends AppCompatActivity  implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.navigation) BottomNavigationView bottomNavigationView;
-    @BindView(R.id.fragment_container) FrameLayout fragmentContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,7 @@ public class ContainerActivity extends AppCompatActivity  implements BottomNavig
         ButterKnife.bind(this);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        initFragmentContainer();
     }
 
     @Override
@@ -39,5 +40,11 @@ public class ContainerActivity extends AppCompatActivity  implements BottomNavig
         }
 
         return true;
+    }
+
+    private void initFragmentContainer() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        HomeFragment homeFragment = new HomeFragment();
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
     }
 }
