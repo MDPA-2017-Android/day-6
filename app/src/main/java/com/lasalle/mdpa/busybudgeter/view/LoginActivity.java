@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
             userLoginViewModel.OnLoginUser(usernameEditText.getText().toString(), passwordEditText.getText().toString());
         }
         catch (IllegalArgumentException e) {
-            Toast.makeText(this, R.string.login_empty, Toast.LENGTH_SHORT);
+            Toast.makeText(this, R.string.login_empty, Toast.LENGTH_SHORT).show();
         }
     }
 }
