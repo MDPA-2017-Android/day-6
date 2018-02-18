@@ -11,6 +11,9 @@ import com.lasalle.mdpa.busybudgeter.view.model.UserLoginViewModel;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import toothpick.Scope;
 import toothpick.Toothpick;
 import toothpick.config.Binding;
@@ -22,6 +25,9 @@ public class LoginActivity extends AppCompatActivity {
 
     @Inject UserLoginViewModel userLoginViewModel;
 
+    @BindView(R.id.username) EditText username;
+    @BindView(R.id.password) EditText password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         scope = Toothpick.openScopes(getApplication(), this);
@@ -32,8 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         Toothpick.inject(this, scope);
 
         setContentView(R.layout.activity_login);
-
-        findViewById(R.id.login_button).setOnClickListener(view -> onLoginButtonClicked());
+        ButterKnife.bind(this);
     }
 
     @Override
@@ -42,12 +47,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private void onLoginButtonClicked() {
-        EditText usernameEditText = findViewById(R.id.username);
-        EditText passwordEditText = findViewById(R.id.password);
-
+    @OnClick(R.id.login_button)
+    public void onLoginButtonClicked() {
         try {
-            userLoginViewModel.OnLoginUser(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+            userLoginViewModel.OnLoginUser(username.getText().toString(), password.getText().toString());
         }
         catch (IllegalArgumentException e) {
             Toast.makeText(this, R.string.login_empty, Toast.LENGTH_SHORT).show();
