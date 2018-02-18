@@ -8,9 +8,11 @@ import com.google.common.hash.Hashing;
 import com.lasalle.mdpa.busybudgeter.manager.UserManager;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+@Singleton
 public class UserLoginViewModel extends ViewModel {
 
     @Inject UserManager userManager;

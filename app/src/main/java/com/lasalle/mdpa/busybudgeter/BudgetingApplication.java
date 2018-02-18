@@ -2,6 +2,9 @@ package com.lasalle.mdpa.busybudgeter;
 
 import android.app.Application;
 
+import com.lasalle.mdpa.busybudgeter.manager.UserManager;
+import com.lasalle.mdpa.busybudgeter.manager.impl.UserManagerImpl;
+
 import toothpick.Scope;
 import toothpick.Toothpick;
 import toothpick.config.Module;
@@ -13,8 +16,8 @@ public class BudgetingApplication extends Application {
         super.onCreate();
 
         Scope applicationScope = Toothpick.openScope(this);
-        applicationScope.installModules(new Module() {
-            //TODO: fill when needed
-        });
+        applicationScope.installModules(new Module() {{
+            bind(UserManager.class).to(UserManagerImpl.class);
+        }});
     }
 }
