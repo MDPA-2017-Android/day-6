@@ -1,27 +1,19 @@
 package com.lasalle.mdpa.busybudgeter.view.model;
 
-import android.util.Log;
+import android.arch.lifecycle.ViewModel;
 
 import com.google.common.base.Charsets;
-import com.google.common.base.Utf8;
 import com.google.common.hash.Hasher;
 import com.google.common.hash.Hashing;
 import com.lasalle.mdpa.busybudgeter.manager.UserManager;
 
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public class UserLoginViewModel {
+public class UserLoginViewModel extends ViewModel {
 
-    private UserManager userManager;
-
-    public UserLoginViewModel(UserManager userManager) {
-        this.userManager = userManager;
-    }
+    @Inject UserManager userManager;
 
     public void OnLoginUser(String username, String password) throws IllegalArgumentException {
         checkArgument(username != null && !username.isEmpty(), "Username parameter must not be null or empty");

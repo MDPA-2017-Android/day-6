@@ -4,10 +4,17 @@ import com.lasalle.mdpa.busybudgeter.manager.UserManager;
 import com.lasalle.mdpa.busybudgeter.view.model.UserLoginViewModel;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import javax.inject.Inject;
+
+import toothpick.testing.ToothPickRule;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
@@ -16,15 +23,17 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserLoginViewModelTest {
-
-    private UserLoginViewModel userLoginViewModel;
+    @Rule
+    public ToothPickRule toothPickRule = new ToothPickRule(this, "UserLoginViewModel");
 
     @Mock
     private UserManager userManager;
 
+    @Inject UserLoginViewModel userLoginViewModel;
+
     @Before
     public void setupUserLoginViewModel() {
-        userLoginViewModel = new UserLoginViewModel(userManager);
+        toothPickRule.inject(this);
     }
 
     @Test
