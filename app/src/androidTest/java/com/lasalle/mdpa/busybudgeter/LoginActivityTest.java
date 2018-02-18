@@ -16,7 +16,13 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
@@ -24,7 +30,7 @@ import static org.junit.Assert.*;
 public class LoginActivityTest {
 
     @Rule
-    public ActivityTestRule<LoginActivity> loginActivity = new ActivityTestRule<>(LoginActivity.class);
+    public ActivityTestRule<LoginActivity> loginActivityRule = new ActivityTestRule<>(LoginActivity.class);
 
     @Test
     public void emptyUserAndPassword() {
@@ -33,6 +39,11 @@ public class LoginActivityTest {
         onView(withId(R.id.password))
                 .perform(typeText(""), closeSoftKeyboard());
         onView(withId(R.id.login_button)).perform(click());
+
+        // Check that a toast is displayed because of empty user and password
+        onView(withText(R.string.login_empty)).
+                inRoot(withDecorView(not(is(loginActivityRule.getActivity().getWindow().getDecorView())))).
+                check(matches(isDisplayed()));
     }
 
 }
