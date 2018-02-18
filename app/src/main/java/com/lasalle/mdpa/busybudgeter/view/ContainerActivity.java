@@ -3,6 +3,7 @@ package com.lasalle.mdpa.busybudgeter.view;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -30,14 +31,23 @@ public class ContainerActivity extends AppCompatActivity  implements BottomNavig
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Fragment fragment = null;
         switch (item.getItemId()) {
             case R.id.navigation_home:
-
+                fragment = new HomeFragment();
+                break;
             case R.id.navigation_dashboard:
 
-            case R.id.navigation_notifications:
+            case R.id.navigation_settings:
+                fragment = new SettingsFragment();
+                break;
 
         }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+
+        item.setChecked(true);
 
         return true;
     }
