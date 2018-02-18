@@ -2,6 +2,9 @@ package com.lasalle.mdpa.busybudgeter.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.lasalle.mdpa.busybudgeter.R;
 import com.lasalle.mdpa.busybudgeter.view.model.UserLoginViewModel;
@@ -30,13 +33,24 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
-        //TODO: remove, only to test if it works
-        userLoginViewModel.OnLoginUser("1234","1234");
+        findViewById(R.id.login_button).setOnClickListener(view -> onLoginButtonClicked());
     }
 
     @Override
     protected void onDestroy() {
         Toothpick.closeScope(this);
         super.onDestroy();
+    }
+
+    private void onLoginButtonClicked() {
+        EditText usernameEditText = findViewById(R.id.username);
+        EditText passwordEditText = findViewById(R.id.password);
+
+        try {
+            userLoginViewModel.OnLoginUser(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+        }
+        catch (IllegalArgumentException e) {
+            Toast.makeText(this, R.string.login_empty, Toast.LENGTH_SHORT);
+        }
     }
 }
