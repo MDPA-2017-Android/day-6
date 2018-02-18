@@ -36,7 +36,11 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -87,4 +91,16 @@ public class LoginActivityTest {
                 check(matches(isDisplayed()));
     }
 
+    @Test
+    public void checkUserAndPasswordAreForwardedProperly() {
+        onView(withId(R.id.username))
+                .perform(typeText("test"), closeSoftKeyboard());
+        onView(withId(R.id.password))
+                .perform(typeText("123456"), closeSoftKeyboard());
+        onView(withId(R.id.login_button)).perform(click());
+
+        verify(userManagerMock, times(1)).LoginUser(eq("test"), eq("8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"));
+    }
+
+    // TODO: add test to check that the button can not be clicked more than once and more stuff we may want to.
 }
