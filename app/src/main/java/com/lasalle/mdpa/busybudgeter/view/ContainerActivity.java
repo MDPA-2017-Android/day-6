@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.lasalle.mdpa.busybudgeter.R;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ContainerActivity extends AppCompatActivity  implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -21,6 +22,7 @@ public class ContainerActivity extends AppCompatActivity  implements BottomNavig
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container);
+        ButterKnife.bind(this);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
     }
