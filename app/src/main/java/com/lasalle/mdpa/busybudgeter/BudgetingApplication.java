@@ -16,7 +16,11 @@ public class BudgetingApplication extends Application {
         super.onCreate();
 
         Scope applicationScope = Toothpick.openScope(this);
-        applicationScope.installModules(new Module() {{
+        installToothPickModules(applicationScope);
+    }
+
+    public void installToothPickModules(Scope scope) {
+        scope.installModules(new Module() {{
             bind(UserManager.class).to(UserManagerImpl.class);
         }});
     }

@@ -9,6 +9,7 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public void LoginUser(String username, String password) {
-
+        int i = 0;
+        i++;
     }
 }
