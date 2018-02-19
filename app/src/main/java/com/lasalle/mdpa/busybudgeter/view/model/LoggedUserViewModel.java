@@ -8,6 +8,7 @@ import com.google.common.base.Charsets;
 import com.google.common.hash.Hasher;
 import com.google.common.hash.Hashing;
 import com.lasalle.mdpa.busybudgeter.manager.UserManager;
+import com.lasalle.mdpa.busybudgeter.model.User;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -30,6 +31,11 @@ public class LoggedUserViewModel extends ViewModel {
         return user;
     }
 
+    public void retrieveUserData() {
+        User userData = new User(userManager.retrieveUserData());
+        user.setValue(userData);
+    }
+
     public void updateUserPassword(String newPassword) {
         checkArgument(newPassword != null && !newPassword.isEmpty(), "Password parameter must not be null or empty");
 
@@ -46,5 +52,11 @@ public class LoggedUserViewModel extends ViewModel {
         public String name;
         public String lastname;
         public String username;
+
+        public User(com.lasalle.mdpa.busybudgeter.model.User systemUser) {
+            name = systemUser.getName();
+            lastname = systemUser.getLastName();
+            username = systemUser.getUsername();
+        }
     }
 }

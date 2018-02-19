@@ -99,7 +99,7 @@ public class LoginActivityTest {
                 .perform(typeText("123456"), closeSoftKeyboard());
         onView(withId(R.id.login_button)).perform(click());
 
-        verify(userManagerMock, times(1)).LoginUser(eq("test"), eq("8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"));
+        verify(userManagerMock, times(1)).loginUser(eq("test"), eq("8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"));
     }
 
     // TODO: add test to check that the button can not be clicked more than once and more stuff we may want to.

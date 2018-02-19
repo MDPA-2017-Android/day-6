@@ -1,6 +1,7 @@
 package com.lasalle.mdpa.busybudgeter.manager.impl;
 
 import com.lasalle.mdpa.busybudgeter.manager.UserManager;
+import com.lasalle.mdpa.busybudgeter.model.User;
 
 import javax.inject.Singleton;
 
@@ -16,5 +17,10 @@ public class UserManagerImpl implements UserManager {
     @Override
     public void updateUserPassword(String oldPassword, String newPassword) {
 
+    }
+
+    @Override
+    public User retrieveUserData() {
+        return null;
     }
 }

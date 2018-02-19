@@ -2,6 +2,7 @@ package com.lasalle.mdpa.busybudgeter.view;
 
 
 import android.app.Activity;
+import android.arch.lifecycle.LiveData;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -43,6 +44,12 @@ public class SettingsFragment extends Fragment {
         Scope scope = Toothpick.openScopes(owner.getApplication(), owner, this);
         super.onCreate(savedInstanceState);
         Toothpick.inject(this, scope);
+
+        loggedUserViewModel.getUser().observe(this, user -> {
+            nameText.setText(user.name);
+            lastNameText.setText(user.lastname);
+            usernameText.setText(user.username);
+        });
     }
 
     @Override
@@ -51,6 +58,9 @@ public class SettingsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         ButterKnife.bind(this, view);
+
+        loggedUserViewModel.retrieveUserData();
+
         return view;
     }
 

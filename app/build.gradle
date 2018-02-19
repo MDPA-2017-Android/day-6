@@ -58,4 +58,8 @@ dependencies {
     // Butterknife
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    // Test fragments isolated
+    androidTestImplementation 'com.21buttons:fragment-test-rule:1.1.0'
+    debugImplementation 'com.21buttons:fragment-test-rule-extras:1.1.0'
 }
