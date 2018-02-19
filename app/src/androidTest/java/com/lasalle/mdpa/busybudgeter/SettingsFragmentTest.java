@@ -75,5 +75,6 @@ public class SettingsFragmentTest {
         onView(withId(R.id.name)).check(matches(withText(mockedUser.getName())));
     }
 
+    // TODO: add test case for when updating password and checking it's not the same as before
 
 }
