@@ -11,22 +11,43 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.lasalle.mdpa.busybudgeter.R;
+import com.lasalle.mdpa.busybudgeter.view.model.LoggedUserViewModel;
+import com.lasalle.mdpa.busybudgeter.view.model.UserLoginViewModel;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import toothpick.Scope;
+import toothpick.Toothpick;
+import toothpick.config.Module;
 
 public class ContainerActivity extends AppCompatActivity  implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.navigation) BottomNavigationView bottomNavigationView;
 
+    @Inject LoggedUserViewModel loggedUserViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Scope scope = Toothpick.openScopes(getApplication(), this);
+        scope.installModules(new Module() {{
+            bind(LoggedUserViewModel.class);
+        }});
         super.onCreate(savedInstanceState);
+        Toothpick.inject(this, scope);
+
         setContentView(R.layout.activity_container);
         ButterKnife.bind(this);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         initFragmentContainer();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Toothpick.closeScope(this);
+        super.onDestroy();
     }
 
     @Override
@@ -41,7 +62,6 @@ public class ContainerActivity extends AppCompatActivity  implements BottomNavig
             case R.id.navigation_settings:
                 fragment = new SettingsFragment();
                 break;
-
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();

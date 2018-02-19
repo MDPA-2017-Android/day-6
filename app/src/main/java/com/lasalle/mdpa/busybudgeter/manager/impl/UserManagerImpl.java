@@ -8,8 +8,13 @@ import javax.inject.Singleton;
 public class UserManagerImpl implements UserManager {
 
     @Override
-    public void LoginUser(String username, String password) {
+    public void loginUser(String username, String password) {
         int i = 0;
         i++;
+    }
+
+    @Override
+    public void updateUserPassword(String oldPassword, String newPassword) {
+
     }
 }

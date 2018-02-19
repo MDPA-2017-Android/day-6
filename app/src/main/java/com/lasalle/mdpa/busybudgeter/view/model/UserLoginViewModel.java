@@ -23,6 +23,6 @@ public class UserLoginViewModel extends ViewModel {
 
         Hasher hasher = Hashing.sha256().newHasher();
         hasher.putString(password, Charsets.UTF_8);
-        userManager.LoginUser(username, hasher.hash().toString());
+        userManager.loginUser(username, hasher.hash().toString());
     }
 }
