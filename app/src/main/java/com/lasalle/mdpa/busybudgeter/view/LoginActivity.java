@@ -1,7 +1,9 @@
 package com.lasalle.mdpa.busybudgeter.view;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -10,33 +12,33 @@ import com.lasalle.mdpa.busybudgeter.view.model.UserLoginViewModel;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import toothpick.Scope;
 import toothpick.Toothpick;
 import toothpick.config.Module;
 
 public class LoginActivity extends AppCompatActivity {
 
+    @BindView(R.id.username) EditText usernameEditText;
+    @BindView(R.id.password) EditText passwordEditText;
+
     @Inject UserLoginViewModel userLoginViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Scope scope = Toothpick.openScopes(getApplication(), this);
-        scope.installModules(new Module() {{
-            bind(UserLoginViewModel.class);
-        }});
-
+        Log.d("TestThing", "Activity OnCreate");
         super.onCreate(savedInstanceState);
-        Toothpick.inject(this, scope);
+
+        userLoginViewModel = ViewModelProviders.of(this).get(UserLoginViewModel.class);
 
         setContentView(R.layout.activity_login);
-
-        findViewById(R.id.login_button).setOnClickListener(view -> onLoginButtonClicked());
+        ButterKnife.bind(this);
     }
 
+    @OnClick(R.id.login_button)
     public void onLoginButtonClicked() {
-        EditText usernameEditText = findViewById(R.id.username);
-        EditText passwordEditText = findViewById(R.id.password);
-
         try {
             userLoginViewModel.OnLoginUser(usernameEditText.getText().toString(), passwordEditText.getText().toString());
         }
@@ -47,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        Toothpick.closeScope(this);
+        Log.d("TestThing", "Activity onDestroy");
         super.onDestroy();
     }
 }

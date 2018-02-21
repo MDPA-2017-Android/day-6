@@ -50,4 +50,8 @@ dependencies {
     annotationProcessor 'com.github.stephanenicolas.toothpick:toothpick-compiler:1.1.1'
     testCompile 'com.github.stephanenicolas.toothpick:toothpick-testing:1.1.1'
     testAnnotationProcessor "com.github.stephanenicolas.toothpick:toothpick-compiler:1.1.1"
+
+    // Butterknife
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }
