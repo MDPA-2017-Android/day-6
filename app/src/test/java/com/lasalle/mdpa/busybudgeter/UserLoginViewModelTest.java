@@ -39,13 +39,13 @@ public class UserLoginViewModelTest {
     @Test
     public void checkUserNameIsForwardedProperly() throws Exception {
         userLoginViewModel.OnLoginUser("test","123456");
-        verify(userManager, times(1)).LoginUser(eq("test"), anyString());
+        verify(userManager, times(1)).loginUser(eq("test"), anyString());
     }
 
     @Test
     public void checkPasswordForwardedIsSha256Encrypted() throws Exception {
         userLoginViewModel.OnLoginUser("test","123456");
-        verify(userManager, times(1)).LoginUser(anyString(), eq("8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"));
+        verify(userManager, times(1)).loginUser(anyString(), eq("8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"));
     }
 
     @Test(expected = IllegalArgumentException.class)

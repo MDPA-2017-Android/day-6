@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.lasalle.mdpa.busybudgeter.R;
 import com.lasalle.mdpa.busybudgeter.view.model.LoggedUserViewModel;
@@ -66,6 +67,13 @@ public class SettingsFragment extends Fragment {
 
     @OnClick(R.id.update_button)
     public void onClickUpdateButton() {
+        try {
+            loggedUserViewModel.updateUserPassword(passwordText.getText().toString());
+        }
+        catch(IllegalArgumentException e) {
+            Toast.makeText(getContext(), R.string.not_password_repeat, Toast.LENGTH_LONG).show();
+        }
+
 
     }
 

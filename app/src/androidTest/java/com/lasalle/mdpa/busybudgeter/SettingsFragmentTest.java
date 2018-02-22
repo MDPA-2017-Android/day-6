@@ -1,6 +1,7 @@
 package com.lasalle.mdpa.busybudgeter;
 
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.action.ViewActions;
 import android.support.test.filters.MediumTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -27,13 +28,19 @@ import toothpick.Scope;
 import toothpick.Toothpick;
 import toothpick.config.Module;
 
+import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -73,6 +80,30 @@ public class SettingsFragmentTest {
 
         // Check stuff
         onView(withId(R.id.name)).check(matches(withText(mockedUser.getName())));
+    }
+
+    @Test
+    public void failedUpdateAttemptWithSamePassword() {
+        User mockedUser = new User("Pepe","Pepito", "testing", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92");
+        when(userManagerMock.retrieveUserData()).thenReturn(mockedUser);
+
+        // Launch fragment now
+        fragmentTestRule.launchFragment(fragmentTestRule.getFragment());
+
+        // Write same password of before
+        onView(withId(R.id.password))
+            .perform(
+                    typeText("123456"),
+                    ViewActions.closeSoftKeyboard());
+
+        // Press click
+        onView(withId(R.id.update_button)).perform(click());
+
+        // Verify toast is displayed
+        onView(withText(R.string.not_password_repeat)).
+                inRoot(withDecorView(not(is(fragmentTestRule.getActivity().getWindow().getDecorView())))).
+                check(matches(isDisplayed()));
+
     }
 
     // TODO: add test case for when updating password and checking it's not the same as before

@@ -20,19 +20,22 @@ public class LoggedUserViewModel extends ViewModel {
 
     @Inject UserManager userManager;
 
-    private MutableLiveData<User> user;
+    private MutableLiveData<UserPresentationData> user;
     private String userOldPassword;
 
     public LoggedUserViewModel() {
         this.user = new MutableLiveData<>();
     }
 
-    public LiveData<User> getUser() {
+    public LiveData<UserPresentationData> getUser() {
         return user;
     }
 
     public void retrieveUserData() {
-        User userData = new User(userManager.retrieveUserData());
+        User retrievedUser = userManager.retrieveUserData();
+        userOldPassword = retrievedUser.getPassword();
+
+        UserPresentationData userData = new UserPresentationData(retrievedUser );
         user.setValue(userData);
     }
 
@@ -42,18 +45,22 @@ public class LoggedUserViewModel extends ViewModel {
         Hasher hasher = Hashing.sha256().newHasher();
         hasher.putString(newPassword, Charsets.UTF_8);
 
+        String calculatedSha256Password = hasher.hash().toString();
         //TODO: check they can not be the same
 
-        userManager.updateUserPassword(userOldPassword, hasher.hash().toString());
+        checkArgument( !userOldPassword.equals(calculatedSha256Password), "Password can not be the same");
+
+
+        userManager.updateUserPassword(userOldPassword, calculatedSha256Password);
     }
 
     // Inner class
-    public class User {
+    public class UserPresentationData {
         public String name;
         public String lastname;
         public String username;
 
-        public User(com.lasalle.mdpa.busybudgeter.model.User systemUser) {
+        public UserPresentationData(com.lasalle.mdpa.busybudgeter.model.User systemUser) {
             name = systemUser.getName();
             lastname = systemUser.getLastName();
             username = systemUser.getUsername();
